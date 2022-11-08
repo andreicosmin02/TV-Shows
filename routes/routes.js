@@ -40,13 +40,27 @@ router.get('/getOne/:id', async (req, res) => {
 });
 
 // Update by ID Method
-router.patch('/update/:id', (req, res) => {
-    res.send('Update by ID API');
+router.patch('/update/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const options = { new: true };
+
+        const result = await Model.findByIdAndUpdate(id, updatedData, options);
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
 })
 
 // Delete by ID Method
-router.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API');   
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Model.findByIdAndDelete(id);
+        res.send(`Document with id ${id} has been deleted...`);
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
 })
 
 module.exports = router;
