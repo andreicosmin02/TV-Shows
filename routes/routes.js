@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Model = require('../model/Show');
+const Show = require('../model/Show');
 
 // Post Method
 router.post('/post', async (req, res) => {
-    const data = new Model({
+    const data = new Show({
         name: req.body.name,
         description: req.body.description,
         review: req.body.review,
@@ -22,7 +22,7 @@ router.post('/post', async (req, res) => {
 // Get all Method
 router.get('/getAll', async (req, res) => {
     try {
-        const data = await Model.find();
+        const data = await Show.find();
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error });
@@ -32,7 +32,7 @@ router.get('/getAll', async (req, res) => {
 // Get by ID Method
 router.get('/getOne/:id', async (req, res) => {
     try {
-        const data = await Model.findById(req.params.id);
+        const data = await Show.findById(req.params.id);
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error });
@@ -46,7 +46,7 @@ router.patch('/update/:id', async (req, res) => {
         const updatedData = req.body;
         const options = { new: true };
 
-        const result = await Model.findByIdAndUpdate(id, updatedData, options);
+        const result = await Show.findByIdAndUpdate(id, updatedData, options);
     } catch (error) {
         res.status(400).json({ message: error });
     }
@@ -56,7 +56,7 @@ router.patch('/update/:id', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await Model.findByIdAndDelete(id);
+        const data = await Show.findByIdAndDelete(id);
         res.send(`Document with id ${id} has been deleted...`);
     } catch (error) {
         res.status(400).json({ message: error });

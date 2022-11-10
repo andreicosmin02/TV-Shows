@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;    background-color: white;
+    color: black;
+}
+
+#container {
+    width: 500px;
+    margin: 20px auto;
+    padding: 10px 20px;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+.form-input {
+    margin-bottom: 30px;
+}
+
+.form-input #name,
+.form-input #name:focus,
+.form-input #description,
+.form-input #desctiption:focus,
+.form-input #review,
+.form-input #review:focus {
+    background-color: ghostwhite;
+    border-style: none none solid none;
+    border-color: gray;
+    border-width: 2px;
+    color: black;
+    outline: none;
+    width: 100%;
+    padding-inline: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.form-input #description,
+.form-input #review {
+    resize: none;
+    scrollbar-width: thin;
+}
+
+label {
+    display: block;
+    margin-bottom: 20px;
+    color: black;
+}
+label[for="completed"] {
+    display: inline;
+    margin-right: 10px;
+}
+
+
+#back,
+#submit {
+    background-color: black;
+    color: white;
+    padding: 5px 15px;
+    text-transform: uppercase;
+}
+#back:hover,
+#submit:hover {
+    cursor: pointer;
+}
+#back:active,
+#submit:active {    
+    background-color: #333;
+}
+
+#back {
+    margin: 30px 0;
+}

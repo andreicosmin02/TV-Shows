@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Lista seriale</h1>
+        <section id="section-form">
+            <h2>Adauga serial</h2>
+            <form action="/create" method="post">
+                <div class="form-input">
+                    <input type="text" name="name" id="name" placeholder="Nume" required>
+                </div>
+                <div class="form-input">
+                    <textarea name="description" id="description" cols="30" rows="3" placeholder="Adauga o descriere" required></textarea>
+                </div>
+                <input type="submit" value="Submit" id="form-submit">
+            </form>
+        </section>
+
+        <section id="shows">
+            <% if (shows.length === 0) { %>
+                <p>Nu ai niciun serial in lista </p>
+            <% } %>
+            <% for (const item of shows) { %>
+                <div class="show">
+                    <h2 id="show-name" 
+                    <% if (item.completed === true) { %>
+                        class="completed"
+                    <% } %>
+                    ><%= item.name %></h2>
+                    <p>Descriere: <%= item.description %></p>
+                    <% if (item.review !== 'Add a review') { %>
+                        <p>Review: <%= item.review %></p>
+                    <% } else { %>
+                        <p>Editeaza pentru a adauga un review</p>
+                    <% } %>
+                    <div id="buttons">
+                        <a href="/<%= item.id %>"><button id="show-editbtn">Editeaza</button></a>
+                        <form action="/delete/<%= item.id %>" method="delete" id="form-delete">
+                            <input type="submit" value="Sterge" id="show-deletebtn">
+                        </form>
+                    </div>
+                </div>
+            <% } %>
+            
+        </section>
+
+        <footer id="footer">
+            <%- include('../partials/footer') %>
+        </footer>
+    </div>
+</body>
+</html>
