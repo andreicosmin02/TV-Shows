@@ -37,6 +37,7 @@ h2 {
     border-width: 2px;
     color: black;
     outline: none;
+    height: 50px;
     width: 100%;
     padding-inline: 5px;
     font-size: 1rem;
