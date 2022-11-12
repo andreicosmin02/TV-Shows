@@ -1,66 +1,69 @@
 const express = require('express');
 const router = express.Router();
+const Shows = require('../model/Show');
 const Show = require('../model/Show');
 
-// Post Method
+router.get('/', async (req, res) => {
+    try {
+        const shows = await Shows.find();
+        res.render('pages/index', { shows });
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+});
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const show = await Shows.findById(id);
+        if (show !== null) {   
+            res.render('pages/show', { show })
+        } else {
+            res.status(400).send(`Nu e niciun serial cu id-ul ${id}`);
+        }
+    } catch (error) {
+        res.status(500).send(`Nu e niciun serial cu id-ul ${id}`);
+    }
+})
+
+
 router.post('/post', async (req, res) => {
+    const { name, description } = req.body;
     const data = new Show({
-        name: req.body.name,
-        description: req.body.description,
-        review: req.body.review,
-        completed: req.body.completed,
+        name: name,
+        description: description,
     })
-
     try {
-        const dataToSave = await data.save();
-        res.status(200).json(dataToSave);
-    } catch(error) {
-        res.status(400).json({ message: error });
-    }
-});
-
-// Get all Method
-router.get('/getAll', async (req, res) => {
-    try {
-        const data = await Show.find();
-        res.json(data);
+        await data.save()
     } catch (error) {
-        res.status(500).json({ message: error });
+        res.status(400).json({ message: error })
     }
-});
-
-// Get by ID Method
-router.get('/getOne/:id', async (req, res) => {
-    try {
-        const data = await Show.findById(req.params.id);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ message: error });
-    }
-});
-
-// Update by ID Method
-router.patch('/update/:id', async (req, res) => {
+    res.redirect('back');
+})
+router.get('/delete/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const updatedData = req.body;
+        await Shows.findByIdAndDelete(id);
+        res.redirect('back');
+    } catch (error) {
+        res.status(400).json({ message: error });
+    }
+})
+router.get('/updateOne/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.query;
+        if (updatedData.completed === 'on') {
+            updatedData.completed = true;
+        } else {
+            updatedData.completed = false;
+        }
         const options = { new: true };
-
-        const result = await Show.findByIdAndUpdate(id, updatedData, options);
+        await Show.findByIdAndUpdate(id, updatedData, options);
+        res.redirect('back');
     } catch (error) {
         res.status(400).json({ message: error });
     }
 })
 
-// Delete by ID Method
-router.delete('/delete/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const data = await Show.findByIdAndDelete(id);
-        res.send(`Document with id ${id} has been deleted...`);
-    } catch (error) {
-        res.status(400).json({ message: error });
-    }
-})
 
 module.exports = router;

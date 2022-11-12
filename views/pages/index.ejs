@@ -9,7 +9,7 @@
         <h1>Lista seriale</h1>
         <section id="section-form">
             <h2>Adauga serial</h2>
-            <form action="/create" method="post">
+            <form action="/post" method="post">
                 <div class="form-input">
                     <input type="text" name="name" id="name" placeholder="Nume" required>
                 </div>
@@ -39,7 +39,7 @@
                     <% } %>
                     <div id="buttons">
                         <a href="/<%= item.id %>"><button id="show-editbtn">Editeaza</button></a>
-                        <form action="/delete/<%= item.id %>" method="delete" id="form-delete">
+                        <form action="/delete/<%= item.id %>" id="form-delete">
                             <input type="submit" value="Sterge" id="show-deletebtn">
                         </form>
                     </div>

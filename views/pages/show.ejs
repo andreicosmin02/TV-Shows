@@ -10,7 +10,7 @@
         
         <section id="section">
             <h2><%= show.name %> - Edit</h2>
-            <form action="/updateOne/<%= show.id %>" method="patch" id="form-input">
+            <form action="/updateOne/<%= show.id %>" id="form-input">
                 <div class="form-input">
                     <label for="name">Editeaza numele:</label>
                     <input type="text" name="name" id="name" value=<%= show.name %>>
